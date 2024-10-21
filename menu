@@ -1,0 +1,115 @@
+package marioboy;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Menu extends JFrame {
+
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
+    private JPanel menuPanel;
+    private marioboy gamePanel;
+    private JPanel optionsPanel;
+    private JPanel creditsPanel;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Menu frame = new Menu();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public Menu() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(true);
+        setSize(900, 450); // Establecer un tamaño inicial
+
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+
+        // Crear las diferentes vistas
+        menuPanel = new JPanel();
+        gamePanel = new marioboy();
+        optionsPanel = new JPanel();
+        creditsPanel = new JPanel();
+
+        // Configurar la vista del menú
+        menuPanel.setLayout(null); // Usar null layout para posicionar botones manualmente
+        JButton playButton = new JButton("Jugar");
+        playButton.setBounds(350, 100, 200, 50);
+        playButton.setFont(new Font("Arial", Font.BOLD, 24));
+        playButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel, "GAME");
+            }
+        });
+
+        JButton optionsButton = new JButton("Opciones");
+        optionsButton.setBounds(350, 200, 200, 50);
+        optionsButton.setFont(new Font("Arial", Font.BOLD, 24));
+        optionsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel, "OPTIONS");
+            }
+        });
+
+        JButton creditsButton = new JButton("Créditos");
+        creditsButton.setBounds(350, 300, 200, 50);
+        creditsButton.setFont(new Font("Arial", Font.BOLD, 24));
+        creditsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel, "CREDITS");
+            }
+        });
+
+        menuPanel.add(playButton);
+        menuPanel.add(optionsButton);
+        menuPanel.add(creditsButton);
+
+        // Configurar la vista de opciones
+        optionsPanel.setLayout(new BorderLayout());
+        JButton backButton1 = new JButton("Volver al Menú");
+        backButton1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel, "MENU");
+            }
+        });
+        optionsPanel.add(backButton1, BorderLayout.SOUTH);
+
+        // Configurar la vista de créditos
+        creditsPanel.setLayout(new BorderLayout());
+        JButton backButton2 = new JButton("Volver al Menú");
+        backButton2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel, "MENU");
+            }
+        });
+        creditsPanel.add(backButton2, BorderLayout.SOUTH);
+
+        // Añadir las vistas al panel principal
+        mainPanel.add(menuPanel, "MENU");
+        mainPanel.add(gamePanel.getContentPane(), "GAME");
+        mainPanel.add(optionsPanel, "OPTIONS");
+        mainPanel.add(creditsPanel, "CREDITS");
+
+        // Establecer la vista inicial
+        cardLayout.show(mainPanel, "MENU");
+
+        // Añadir el panel principal al marco
+        setContentPane(mainPanel);
+    }
+}
