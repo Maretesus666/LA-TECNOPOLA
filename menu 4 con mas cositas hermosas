@@ -1,0 +1,144 @@
+package marioboy;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Menu extends JFrame {
+
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
+    private MenuPanel menuPanel;
+    private marioboy gamePanel;
+    private OptionsPanel optionsPanel;
+    private CreditsPanel creditsPanel;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                Menu frame = new Menu();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public Menu() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(true);
+        setSize(900, 450);
+
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+
+        menuPanel = new MenuPanel();
+        gamePanel = new marioboy();
+        optionsPanel = new OptionsPanel();
+        creditsPanel = new CreditsPanel();
+
+        mainPanel.add(menuPanel, "MENU");
+        mainPanel.add(gamePanel.getContentPane(), "GAME");
+        mainPanel.add(optionsPanel, "OPTIONS");
+        mainPanel.add(creditsPanel, "CREDITS");
+
+        cardLayout.show(mainPanel, "MENU");
+
+        setContentPane(mainPanel);
+
+        // Override setSize to enforce diagonal resizing
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int width = getWidth();
+                int height = getHeight();
+                int size = Math.min(width, height);
+                setSize(size, size);
+            }
+        });
+    }
+
+    class MenuPanel extends JPanel {
+        private Image backgroundImage;
+        private Image playButtonImage;
+        private Image optionsButtonImage;
+        private Image creditsButtonImage;
+
+        public MenuPanel() {
+            setLayout(new GridBagLayout());
+            backgroundImage = new ImageIcon(getClass().getResource("/imagen/playa.gif")).getImage();
+            playButtonImage = new ImageIcon(getClass().getResource("/imagen/cubo.png")).getImage();
+            optionsButtonImage = new ImageIcon(getClass().getResource("/imagen/cubopasto.png")).getImage();
+            creditsButtonImage = new ImageIcon(getClass().getResource("/imagen/cubo.png")).getImage();
+
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.insets = new Insets(10, 0, 10, 0);
+
+            JButton playButton = createButton(playButtonImage, e -> cardLayout.show(mainPanel, "GAME"));
+            JButton optionsButton = createButton(optionsButtonImage, e -> cardLayout.show(mainPanel, "OPTIONS"));
+            JButton creditsButton = createButton(creditsButtonImage, e -> cardLayout.show(mainPanel, "CREDITS"));
+
+            add(playButton, gbc);
+            add(optionsButton, gbc);
+            add(creditsButton, gbc);
+        }
+
+        private JButton createButton(Image image, ActionListener listener) {
+            JButton button = new JButton(new ImageIcon(image));
+            button.setBorderPainted(false);
+            button.setContentAreaFilled(false);
+            button.addActionListener(listener);
+            return button;
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+
+    class OptionsPanel extends JPanel {
+        private Image backgroundImage;
+
+        public OptionsPanel() {
+            setLayout(new BorderLayout());
+            backgroundImage = new ImageIcon(getClass().getResource("/imagen/platap.png")).getImage();
+
+            JButton backButton = new JButton(new ImageIcon(getClass().getResource("/imagen/puerta.png")));
+            backButton.addActionListener(e -> cardLayout.show(mainPanel, "MENU"));
+            backButton.setBorderPainted(false);
+            backButton.setContentAreaFilled(false);
+            add(backButton, BorderLayout.SOUTH);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+
+    class CreditsPanel extends JPanel {
+        private Image backgroundImage;
+
+        public CreditsPanel() {
+            setLayout(new BorderLayout());
+            backgroundImage = new ImageIcon(getClass().getResource("/imagen/POLLOLEVITA.png")).getImage();
+
+            JButton backButton = new JButton(new ImageIcon(getClass().getResource("/imagen/ptarena.png")));
+            backButton.addActionListener(e -> cardLayout.show(mainPanel, "MENU"));
+            backButton.setBorderPainted(false);
+            backButton.setContentAreaFilled(false);
+            add(backButton, BorderLayout.SOUTH);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+}
