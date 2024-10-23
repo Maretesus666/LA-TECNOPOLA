@@ -27,7 +27,7 @@ public class Menu extends JFrame {
     public Menu() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
-        setSize(900, 450);
+        setSize(800,600);
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -77,8 +77,8 @@ public class Menu extends JFrame {
         public MenuPanel() {
             setLayout(null);
             backgroundImage = new ImageIcon(getClass().getResource("/imagen/monogamia.jpg")).getImage();
-            playButtonImage = new ImageIcon(getClass().getResource("/imagen/cubo.png")).getImage();
-            optionsButtonImage = new ImageIcon(getClass().getResource("/imagen/cubopasto.png")).getImage();
+            playButtonImage = new ImageIcon(getClass().getResource("/imagen/JUGAR.png")).getImage();
+            optionsButtonImage = new ImageIcon(getClass().getResource("/imagen/AJUSTES.png")).getImage();
             creditsButtonImage = new ImageIcon(getClass().getResource("/imagen/cubo.png")).getImage();
 
             playButton = createButton(playButtonImage, e -> cardLayout.show(mainPanel, "GAME"));
