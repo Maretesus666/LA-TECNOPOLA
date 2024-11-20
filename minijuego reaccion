@@ -1,4 +1,4 @@
- package pong;
+package pong;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,8 +25,9 @@ public class reaccion extends JFrame {
         barraProgreso = new JProgressBar(0, 100);
         barraProgreso.setStringPainted(true);
         add(barraProgreso, BorderLayout.CENTER);
- 
-        resultadoLabel = new JLabel(" ");
+        instruccionLabel = new JLabel("ESPACIO");
+        add(instruccionLabel, BorderLayout.NORTH);
+        resultadoLabel = new JLabel("dfsdf ");
         add(resultadoLabel, BorderLayout.SOUTH);
 
         establecerZonaSegura();
